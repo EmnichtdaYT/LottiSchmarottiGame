@@ -3,6 +3,7 @@ package me.emnichtda.lottischmarotti.game.view;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -33,6 +34,7 @@ public class GameScreen extends Pane implements Showable{
 		getChildren().add(spielfeld);
 		
 		lv_players.setLayoutX(850);
+		lv_players.maxHeightProperty().set(75);
 		getChildren().add(lv_players);
 	}
 	

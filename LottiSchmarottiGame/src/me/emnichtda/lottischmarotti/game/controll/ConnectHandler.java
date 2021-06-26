@@ -41,7 +41,7 @@ public class ConnectHandler implements EventHandler<ActionEvent> {
 		
 		Optional<String> nameO = main.showNameBox();
 		
-		if(nameO.isEmpty()) {
+		if(nameO.isEmpty() || nameO.get().isBlank()) {
 			main.showError("Invalid input", "Please enter your name");
 			return;
 		}
