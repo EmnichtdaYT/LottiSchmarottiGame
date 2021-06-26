@@ -50,6 +50,7 @@ public class ConnectHandler implements EventHandler<ActionEvent> {
 		
 		main.showGameListScreen(splitted[0], port, name);
 		
+		
 	}
 
 	public Main getMain() {

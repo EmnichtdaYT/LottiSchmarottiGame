@@ -19,6 +19,7 @@ import me.emnichtda.lottischmarotti.game.model.Showable;
 public class MainMenu extends GridPane implements Showable {
 
 	private Main main;
+	private Scene scene = new Scene(this, 500, 300);
 
 	public MainMenu(Main main) {
 		this.main = main;
@@ -56,7 +57,6 @@ public class MainMenu extends GridPane implements Showable {
 	}
 
 	public void show() {
-		Scene scene = new Scene(this, 500, 300);
 		main.setScene(scene);
 	}
 
