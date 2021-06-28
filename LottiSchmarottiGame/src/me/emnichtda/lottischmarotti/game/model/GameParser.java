@@ -1,7 +1,9 @@
 package me.emnichtda.lottischmarotti.game.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javafx.concurrent.Task;
 import me.emnichtda.lottischmarotti.game.main.Main;
 
 public class GameParser {
@@ -17,6 +19,11 @@ public class GameParser {
 	public void parse(String input) throws NotALottiSchmarottiGameException {
 		
 		String inputUpper = input.toUpperCase();
+		
+		if(inputUpper.startsWith("POST 0")) {
+			System.out.println("ack " + inputUpper);
+			return;
+		}
 		
 		if(inputUpper.startsWith("POST 22")) {
 
@@ -45,6 +52,47 @@ public class GameParser {
 		}else if(inputUpper.startsWith("POST 21")) {
 			main.showError("Error", "The server is shutting down... " + input);
 			game.close();
+		}else if(inputUpper.startsWith("GET 2")) {
+			Task<String> t = new DiceDecisionHandler(inputUpper);
+			t.messageProperty().addListener((idfk, np, current) -> {
+				System.out.println(current);
+				if(current.contains("CONTINUE?")) {
+					game.requestContinueDecision();
+				}else {
+					//game.requestCharacterDecision();
+				}
+			});
+			new Thread(t).start();
+		}else {
+			main.showError("Error", "Unrecognized input received from server " + input);
+		}
+				
+	}
+	
+	class DiceDecisionHandler extends Task<String> {
+		String inputUpper;
+		public DiceDecisionHandler(String inputUpper) {
+			this.inputUpper = inputUpper;
+		}
+		@Override
+		protected String call() throws Exception {
+			updateMessage(inputUpper);
+			while(game.getDiceDecision()==-1) {
+				try {
+					Thread.sleep(900);
+				} catch (InterruptedException e) { }
+				try {
+					game.getOut().writeUTF("POST 23 waiting");
+				} catch (IOException e) {
+					main.showError("Error", "Unable to send timeout request " + e.getLocalizedMessage());
+				}
+			}
+			if(game.getDiceDecision()==1) {
+				game.getOut().writeUTF("POST 2 c");
+			}else if(game.getDiceDecision()==0) {
+				game.getOut().writeUTF("POST 2 n");
+			}
+			return null;
 		}
 	}
 }

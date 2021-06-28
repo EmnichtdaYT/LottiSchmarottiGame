@@ -14,17 +14,21 @@ public class Game implements Showable {
 
 	public static final int MAX_PLAYERS = 3;
 
-	private String ip;
-	private int port;
 	private int playersConnected;
+
 	private Main main;
 	private GameListScreen gameListScreen;
+
+	private String ip;
+	private int port;
 	private String name;
 
 	private DataOutputStream out;
 	private DataInputStream in;
 
 	private Socket socket;
+
+	private int diceDecision = -1;
 
 	public Game(Main main, GameListScreen gameListScreen, String ip, int port, String name, int playersConnected) {
 		this.ip = ip;
@@ -53,7 +57,7 @@ public class Game implements Showable {
 
 	public void start() throws IOException, NotALottiSchmarottiGameException, LottiSchmarottiError {
 
-		socket = new Socket(ip, port);		
+		socket = new Socket(ip, port);
 
 		out = new DataOutputStream(socket.getOutputStream());
 		in = new DataInputStream(socket.getInputStream());
@@ -67,13 +71,13 @@ public class Game implements Showable {
 		}
 
 		out.writeUTF("POST 1 PLAYER " + name);
-		
+
 		String clients = in.readUTF();
-		
-		if(clients.startsWith("POST 40")) {
+
+		if (clients.startsWith("POST 40")) {
 			throw new LottiSchmarottiError(clients);
 		}
-		
+
 		String splitted[] = clients.split(":");
 		if (splitted.length != 3) {
 			socket.close();
@@ -86,16 +90,16 @@ public class Game implements Showable {
 			if (name.length() > 0) {
 				if (name.equals("Clients"))
 					break;
-				players.add(name.substring(1, name.length()-1));
+				players.add(name.substring(1, name.length() - 1));
 			}
 		}
 
 		main.setPlayersConnected(players);
-		
+
 		GameInput task = new GameInput();
 
 		GameParser parser = new GameParser(main, this);
-		
+
 		task.messageProperty().addListener((idfk, np, input) -> {
 			try {
 				parser.parse(input);
@@ -103,22 +107,32 @@ public class Game implements Showable {
 				main.showError("Error", e.getLocalizedMessage());
 			}
 		});
-		
+
 		new Thread(task).start();
-		
+
 	}
-	
+
 	class GameInput extends Task<Game> {
 
 		@Override
 		protected Game call() throws Exception {
-			while(true) {
+			while (true) {
 				try {
 					String line = in.readUTF();
 					updateMessage(line);
-				} catch (IOException e) { main.showError("Error", e.getLocalizedMessage()); }
+				} catch (IOException e) {
+					main.showError("Error", e.getLocalizedMessage());
+				}
 			}
 		}
+	}
+
+	public DataOutputStream getOut() {
+		return out;
+	}
+
+	public DataInputStream getIn() {
+		return in;
 	}
 
 	public void close() {
@@ -129,6 +143,22 @@ public class Game implements Showable {
 				socket.close();
 			} catch (IOException e) {
 			} // Dann eben nicht lmao
+	}
+
+	public int getDiceDecision() {
+		return diceDecision;
+	}
+
+	public void requestContinueDecision() {
+		diceDecision = -1;
+		main.getGameScreen().showRollButton();
+		main.getGameScreen().showContinueButton();
+		main.getGameScreen().getContinueButton().setOnAction((e) -> {
+			diceDecision = 0;
+		});
+		main.getGameScreen().getRollButton().setOnAction((e) -> {
+			diceDecision = 1;
+		});
 	}
 
 }

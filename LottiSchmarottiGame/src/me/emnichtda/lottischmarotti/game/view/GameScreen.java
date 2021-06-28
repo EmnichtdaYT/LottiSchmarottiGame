@@ -3,9 +3,9 @@ package me.emnichtda.lottischmarotti.game.view;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,6 +20,8 @@ public class GameScreen extends Pane implements Showable{
 	
 	private ImageView spielfeld;
 	private ListView<String> lv_players = new ListView<String>();
+	private Button btn_roll;
+	private Button btn_continue;
 	
 	public GameScreen(Main main, Game game) {
 		this.game = game;
@@ -53,5 +55,27 @@ public class GameScreen extends Pane implements Showable{
 	public void updatePlayers() { 
 		lv_players.setItems(FXCollections.observableArrayList(main.getPlayersConnected()));
 		
+	}
+
+	public void showRollButton() {
+		if(btn_roll==null) btn_roll = new Button("Roll another time");
+		btn_roll.setLayoutX(900);
+		btn_roll.setLayoutY(500);
+		getChildren().add(btn_roll);
+	}
+	
+	public Button getRollButton() {
+		return btn_roll;
+	}
+
+	public void showContinueButton() {
+		if(btn_continue==null) btn_continue = new Button("Continue");
+		btn_continue.setLayoutX(980);
+		btn_continue.setLayoutY(500);
+		getChildren().add(btn_continue);
+	}
+
+	public Button getContinueButton() {
+		return btn_continue;
 	}
 }
