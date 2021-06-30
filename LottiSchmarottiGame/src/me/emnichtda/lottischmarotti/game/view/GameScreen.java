@@ -2,6 +2,7 @@ package me.emnichtda.lottischmarotti.game.view;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
@@ -17,6 +18,7 @@ import me.emnichtda.lottischmarotti.game.model.Showable;
 public class GameScreen extends Pane implements Showable {
 	private Game game;
 	private Main main;
+	private ArrayList<GameCharacter> characters = new ArrayList<>();
 
 	private ImageView spielfeld;
 	private ListView<String> lv_players = new ListView<String>();
@@ -40,6 +42,12 @@ public class GameScreen extends Pane implements Showable {
 		lv_players.setLayoutX(850);
 		lv_players.maxHeightProperty().set(75);
 		getChildren().add(lv_players);
+		
+		for(int i = 1; i < 4; i++) {
+			for(int j = 0; j < 3; j++) characters.add(new GameCharacter(main, i, j));
+		}
+		System.out.println("doing");
+		getChildren().addAll(characters);
 	}
 
 	public Game getGame() {
@@ -64,7 +72,7 @@ public class GameScreen extends Pane implements Showable {
 	public void showRollButton() {
 		if (btn_roll == null) {
 			btn_roll = new Button("Roll another time");
-			btn_roll.setLayoutX(900);
+			btn_roll.setLayoutX(890);
 			btn_roll.setLayoutY(500);
 			getChildren().add(btn_roll);
 		}
@@ -77,7 +85,7 @@ public class GameScreen extends Pane implements Showable {
 	public void showContinueButton() {
 		if (btn_continue == null) {
 			btn_continue = new Button("Continue");
-			btn_continue.setLayoutX(980);
+			btn_continue.setLayoutX(1000);
 			btn_continue.setLayoutY(500);
 			getChildren().add(btn_continue);
 		}
@@ -85,5 +93,19 @@ public class GameScreen extends Pane implements Showable {
 
 	public Button getContinueButton() {
 		return btn_continue;
+	}
+
+	public void hideRollButton() {
+		getChildren().remove(btn_roll);
+		btn_roll = null;		
+	}
+
+	public void hideContinueButton() {
+		getChildren().remove(btn_continue);
+		btn_continue = null;
+	}
+
+	public void showCharacterDecision() {
+			//TODO implement
 	}
 }

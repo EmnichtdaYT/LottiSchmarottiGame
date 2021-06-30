@@ -161,4 +161,11 @@ public class Game implements Showable {
 		});
 	}
 
+	public void requestCharacterDecision() {
+		main.getGameScreen().hideRollButton();
+		main.getGameScreen().hideContinueButton();
+		diceDecision = -1;
+		main.getGameScreen().showCharacterDecision();
+	}
+
 }
