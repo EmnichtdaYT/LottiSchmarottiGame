@@ -46,13 +46,20 @@ public class GameScreen extends Pane implements Showable {
 
 		for (int i = 1; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
-				GameCharacter character = new GameCharacter(main, i, j);
+				GameCharacter character = new GameCharacter(main, game, i, j);
 				characters.add(character);
 				new CharacterClickListener(main, character);				
 			}
 		}
 
 		getChildren().addAll(characters);
+		
+		this.setOnMouseClicked((e) -> {
+			System.out.println("x: " + e.getSceneX() + ", y: " + e.getSceneY());
+		});
+		
+		
+		
 	}
 
 	public Game getGame() {

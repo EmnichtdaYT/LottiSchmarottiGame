@@ -3,17 +3,15 @@ package me.emnichtda.lottischmarotti.game.view;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import me.emnichtda.lottischmarotti.game.main.Main;
-import me.emnichtda.lottischmarotti.game.model.GameField;
+import me.emnichtda.lottischmarotti.game.model.Game;
 
 public class GameCharacter extends Button {
 	private Image image;
@@ -21,11 +19,18 @@ public class GameCharacter extends Button {
 	private int playerNumber;
 
 	private int standing;
+	
+	private Main main;
+	private Game game;
 
 	private int defaultX = 775;
 	private int defaultY = 20;
 
-	public GameCharacter(Main main, int playerNumber, int charId) {
+	public GameCharacter(Main main, Game game, int playerNumber, int charId) {
+		
+		this.main = main;
+		this.game = game;
+		
 		this.charId = charId;
 		this.playerNumber = playerNumber;
 		try {
@@ -64,5 +69,23 @@ public class GameCharacter extends Button {
 		this.setOnMouseClicked((e) -> {
 			System.out.println("I got clicked");
 		});
+	}
+
+	public int getStanding() {
+		return standing;
+	}
+
+	public void setStanding(int standing) {
+		this.standing = standing;
+		this.setLayoutX(game.getFields().get(standing).getX()-this.getBackground().getImages().get(0).getImage().getWidth()/2);
+		this.setLayoutY(game.getFields().get(standing).getY()-this.getBackground().getImages().get(0).getImage().getHeight()/2);
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public Main getMain() {
+		return main;
 	}
 }

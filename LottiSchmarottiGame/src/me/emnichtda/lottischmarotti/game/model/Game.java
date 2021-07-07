@@ -31,6 +31,8 @@ public class Game implements Showable {
 	private int diceDecision = -1;
 
 	private int playerNumber;
+	
+	private ArrayList<GameField> fields = new ArrayList<>();
 
 	public Game(Main main, GameListScreen gameListScreen, String ip, int port, String name, int playersConnected) {
 		this.ip = ip;
@@ -39,6 +41,30 @@ public class Game implements Showable {
 		this.playersConnected = playersConnected;
 		this.main = main;
 		this.gameListScreen = gameListScreen;
+		
+		initFields();
+		
+	}
+	
+	//Wayyyy to long method xD
+	private void initFields() {
+		fields.add(new GameField(main.getGameScreen(), 705, 87));
+		fields.add(new GameField(main.getGameScreen(), 697, 176));
+		fields.add(new GameField(main.getGameScreen(), 714, 276));
+		fields.add(new GameField(main.getGameScreen(), 634, 335));
+		fields.add(new GameField(main.getGameScreen(), 620, 448)); //5
+		fields.add(new GameField(main.getGameScreen(), 557, 534));
+		fields.add(new GameField(main.getGameScreen(), 479, 598));
+		fields.add(new GameField(main.getGameScreen(), 366, 628));
+		fields.add(new GameField(main.getGameScreen(), 266, 590));
+		fields.add(new GameField(main.getGameScreen(), 182, 528)); //10
+		fields.add(new GameField(main.getGameScreen(), 122, 436));
+		fields.add(new GameField(main.getGameScreen(), 115, 324));
+		fields.add(new GameField(main.getGameScreen(), 159, 222));
+		fields.add(new GameField(main.getGameScreen(), 228, 145));
+		fields.add(new GameField(main.getGameScreen(), 325, 98));  //15
+		fields.add(new GameField(main.getGameScreen(), 437, 111));
+		
 	}
 
 	public void show() {
@@ -176,6 +202,10 @@ public class Game implements Showable {
 	
 	public void setPlayerNumber(int playerNumber) {
 		this.playerNumber = playerNumber;
+	}
+
+	public ArrayList<GameField> getFields() {
+		return fields;
 	}
 
 }
