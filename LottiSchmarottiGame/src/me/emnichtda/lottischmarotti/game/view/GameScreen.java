@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import me.emnichtda.lottischmarotti.game.controll.CharacterClickListener;
 import me.emnichtda.lottischmarotti.game.main.Main;
 import me.emnichtda.lottischmarotti.game.model.Game;
 import me.emnichtda.lottischmarotti.game.model.Showable;
@@ -42,11 +43,15 @@ public class GameScreen extends Pane implements Showable {
 		lv_players.setLayoutX(850);
 		lv_players.maxHeightProperty().set(75);
 		getChildren().add(lv_players);
-		
-		for(int i = 1; i < 4; i++) {
-			for(int j = 0; j < 3; j++) characters.add(new GameCharacter(main, i, j));
+
+		for (int i = 1; i < 4; i++) {
+			for (int j = 0; j < 3; j++) {
+				GameCharacter character = new GameCharacter(main, i, j);
+				characters.add(character);
+				new CharacterClickListener(main, character);				
+			}
 		}
-		System.out.println("doing");
+
 		getChildren().addAll(characters);
 	}
 
@@ -97,7 +102,7 @@ public class GameScreen extends Pane implements Showable {
 
 	public void hideRollButton() {
 		getChildren().remove(btn_roll);
-		btn_roll = null;		
+		btn_roll = null;
 	}
 
 	public void hideContinueButton() {
@@ -106,6 +111,6 @@ public class GameScreen extends Pane implements Showable {
 	}
 
 	public void showCharacterDecision() {
-			//TODO implement
+		game.getPlayerNumber(); //TODO implement
 	}
 }

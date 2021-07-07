@@ -20,7 +20,7 @@ public class GameCharacter extends Button {
 	private int charId;
 	private int playerNumber;
 
-	private GameField standing;
+	private int standing;
 
 	private int defaultX = 775;
 	private int defaultY = 20;
@@ -60,5 +60,9 @@ public class GameCharacter extends Button {
 		this.setLayoutY(defaultY);
 		this.setMinSize(60, 60);
 		this.setMaxSize(60, 60);
+		
+		this.setOnMouseClicked((e) -> {
+			System.out.println("I got clicked");
+		});
 	}
 }

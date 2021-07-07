@@ -30,6 +30,8 @@ public class Game implements Showable {
 
 	private int diceDecision = -1;
 
+	private int playerNumber;
+
 	public Game(Main main, GameListScreen gameListScreen, String ip, int port, String name, int playersConnected) {
 		this.ip = ip;
 		this.port = port;
@@ -166,6 +168,14 @@ public class Game implements Showable {
 		main.getGameScreen().hideContinueButton();
 		diceDecision = -1;
 		main.getGameScreen().showCharacterDecision();
+	}
+
+	public int getPlayerNumber() {
+		return playerNumber;
+	}
+	
+	public void setPlayerNumber(int playerNumber) {
+		this.playerNumber = playerNumber;
 	}
 
 }
