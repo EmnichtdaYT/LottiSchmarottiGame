@@ -10,6 +10,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import me.emnichtda.lottischmarotti.game.controll.CharacterClickListener;
 import me.emnichtda.lottischmarotti.game.main.Main;
 import me.emnichtda.lottischmarotti.game.model.Game;
 
@@ -66,9 +67,7 @@ public class GameCharacter extends Button {
 		this.setMinSize(60, 60);
 		this.setMaxSize(60, 60);
 		
-		this.setOnMouseClicked((e) -> {
-			System.out.println("I got clicked");
-		});
+		this.setOnMouseClicked(new CharacterClickListener(game, charId, playerNumber));
 	}
 
 	public int getStanding() {

@@ -11,7 +11,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import me.emnichtda.lottischmarotti.game.controll.CharacterClickListener;
 import me.emnichtda.lottischmarotti.game.main.Main;
 import me.emnichtda.lottischmarotti.game.model.Game;
 import me.emnichtda.lottischmarotti.game.model.Showable;
@@ -47,8 +46,7 @@ public class GameScreen extends Pane implements Showable {
 		for (int i = 1; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
 				GameCharacter character = new GameCharacter(main, game, i, j);
-				characters.add(character);
-				new CharacterClickListener(main, character);				
+				characters.add(character);				
 			}
 		}
 

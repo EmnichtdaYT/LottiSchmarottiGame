@@ -2,23 +2,25 @@ package me.emnichtda.lottischmarotti.game.controll;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
-import me.emnichtda.lottischmarotti.game.main.Main;
-import me.emnichtda.lottischmarotti.game.view.GameCharacter;
+import me.emnichtda.lottischmarotti.game.model.Game;
 
 public class CharacterClickListener implements EventHandler<Event>{
 	
-	private Main main;
-	private GameCharacter character;
+	private int charId;
+	private Game game;
+	private int ownerNumber;
 	
-	public CharacterClickListener(Main main, GameCharacter character) {
-		this.main = main;
-		this.character = character;
+	public CharacterClickListener(Game game, int charId, int ownerId) {
+		this.game = game;
+		this.charId = charId;
+		this.ownerNumber = ownerId;
 	}
 
 	@Override
 	public void handle(Event e){
-		//TODO implement
+		System.out.println(game.getPlayerNumber() + " ownerNumber: " + ownerNumber + " char id: " + charId);
+		if(ownerNumber == game.getPlayerNumber())
+		game.selectedCharacter(charId);
 	}
 	
 	

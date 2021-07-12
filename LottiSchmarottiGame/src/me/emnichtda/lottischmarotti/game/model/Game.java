@@ -121,6 +121,8 @@ public class Game implements Showable {
 				players.add(name.substring(1, name.length() - 1));
 			}
 		}
+		
+		playerNumber = players.indexOf(name) + 1;
 
 		main.setPlayersConnected(players);
 
@@ -199,13 +201,17 @@ public class Game implements Showable {
 	public int getPlayerNumber() {
 		return playerNumber;
 	}
-	
-	public void setPlayerNumber(int playerNumber) {
-		this.playerNumber = playerNumber;
-	}
 
 	public ArrayList<GameField> getFields() {
 		return fields;
+	}
+
+	public void selectedCharacter(int charId) {
+		try {
+			out.writeUTF("POST 2 " + charId);
+		} catch (IOException e) {
+			main.showError("Error", e.getLocalizedMessage());
+		}
 	}
 
 }
