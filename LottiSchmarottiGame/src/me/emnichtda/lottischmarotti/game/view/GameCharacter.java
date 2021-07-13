@@ -87,4 +87,14 @@ public class GameCharacter extends Button {
 	public Main getMain() {
 		return main;
 	}
+
+	public int getCharId() {
+		return charId;
+	}
+
+	public int getPlayerNumber() {
+		return playerNumber;
+	}
+	
+	
 }

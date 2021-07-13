@@ -64,6 +64,17 @@ public class Game implements Showable {
 		fields.add(new GameField(main.getGameScreen(), 228, 145));
 		fields.add(new GameField(main.getGameScreen(), 325, 98));  //15
 		fields.add(new GameField(main.getGameScreen(), 437, 111));
+		fields.add(new GameField(main.getGameScreen(), 520, 163));
+		fields.add(new GameField(main.getGameScreen(), 476, 250));
+		fields.add(new GameField(main.getGameScreen(), 386, 216));
+		fields.add(new GameField(main.getGameScreen(), 295, 228)); //20
+		fields.add(new GameField(main.getGameScreen(), 245, 306));
+		fields.add(new GameField(main.getGameScreen(), 218, 397));
+		fields.add(new GameField(main.getGameScreen(), 290, 469));
+		fields.add(new GameField(main.getGameScreen(), 367, 511));
+		fields.add(new GameField(main.getGameScreen(), 456, 479)); //25
+		fields.add(new GameField(main.getGameScreen(), 520, 294));
+		fields.add(new GameField(main.getGameScreen(), 380, 352));
 		
 	}
 
@@ -195,7 +206,6 @@ public class Game implements Showable {
 		main.getGameScreen().hideRollButton();
 		main.getGameScreen().hideContinueButton();
 		diceDecision = -1;
-		main.getGameScreen().showCharacterDecision();
 	}
 
 	public int getPlayerNumber() {

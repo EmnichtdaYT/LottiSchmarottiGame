@@ -54,10 +54,7 @@ public class GameScreen extends Pane implements Showable {
 		
 		this.setOnMouseClicked((e) -> {
 			System.out.println("x: " + e.getSceneX() + ", y: " + e.getSceneY());
-		});
-		
-		
-		
+		});		
 	}
 
 	public Game getGame() {
@@ -115,7 +112,9 @@ public class GameScreen extends Pane implements Showable {
 		btn_continue = null;
 	}
 
-	public void showCharacterDecision() {
-		game.getPlayerNumber(); //TODO implement
+	public ArrayList<GameCharacter> getCharacters() {
+		return characters;
 	}
+	
+	
 }

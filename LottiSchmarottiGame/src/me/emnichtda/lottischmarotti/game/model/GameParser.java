@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javafx.concurrent.Task;
 import me.emnichtda.lottischmarotti.game.main.Main;
+import me.emnichtda.lottischmarotti.game.view.GameCharacter;
 
 public class GameParser {
 
@@ -63,6 +64,29 @@ public class GameParser {
 				}
 			});
 			new Thread(t).start();
+		} else if (inputUpper.startsWith("POST 24")) {
+			String[] fields = inputUpper.substring(8).split("; ");
+			for (String field : fields) {
+				if (!field.contains("NULL")) {
+					int fieldId;
+					int charId;
+					int owner;
+					try {
+						fieldId = Integer.parseInt(field.substring(0, 1));
+						charId = Integer.parseInt(field.substring(3, 4));
+						owner = Integer.parseInt(field.substring(6, 7));
+					} catch (NumberFormatException e) {
+						main.showError("Error!", "Got invalid character information from server.");
+						break;
+					}
+					for (GameCharacter c : main.getGameScreen().getCharacters()) {
+						if (c.getCharId() == charId && c.getPlayerNumber() == owner) {
+							c.setStanding(fieldId);
+							break;
+						}
+					}
+				}
+			}
 		} else {
 			main.showError("Error", "Unrecognized input received from server " + input);
 		}
@@ -96,8 +120,8 @@ public class GameParser {
 				} else if (game.getDiceDecision() == 0) {
 					game.getOut().writeUTF("POST 2 n");
 				}
-			}else {
-				
+			} else {
+
 			}
 			return null;
 		}
