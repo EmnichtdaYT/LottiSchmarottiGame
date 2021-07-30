@@ -60,7 +60,7 @@ public class Game implements Showable {
 		fields.add(new GameField(main.getGameScreen(), 182, 528)); //10
 		fields.add(new GameField(main.getGameScreen(), 122, 436));
 		fields.add(new GameField(main.getGameScreen(), 115, 324));
-		fields.add(new GameField(main.getGameScreen(), 159, 222));
+		fields.add(new GameField(main.getGameScreen(), 159, 228));
 		fields.add(new GameField(main.getGameScreen(), 228, 145));
 		fields.add(new GameField(main.getGameScreen(), 325, 98));  //15
 		fields.add(new GameField(main.getGameScreen(), 437, 111));
@@ -73,7 +73,7 @@ public class Game implements Showable {
 		fields.add(new GameField(main.getGameScreen(), 290, 469));
 		fields.add(new GameField(main.getGameScreen(), 367, 511));
 		fields.add(new GameField(main.getGameScreen(), 456, 479)); //25
-		fields.add(new GameField(main.getGameScreen(), 520, 294));
+		fields.add(new GameField(main.getGameScreen(), 520, 394));
 		fields.add(new GameField(main.getGameScreen(), 380, 352));
 		
 	}
@@ -140,8 +140,11 @@ public class Game implements Showable {
 		GameInput task = new GameInput();
 
 		GameParser parser = new GameParser(main, this);
-
+		CharacterPositionParser positionParser = new CharacterPositionParser(main);
+		
 		task.messageProperty().addListener((idfk, np, input) -> {
+			System.out.println(input);
+			positionParser.parse(input);
 			try {
 				parser.parse(input);
 			} catch (NotALottiSchmarottiGameException e) {
@@ -150,6 +153,8 @@ public class Game implements Showable {
 		});
 
 		new Thread(task).start();
+		
+		
 
 	}
 

@@ -59,35 +59,16 @@ public class GameParser {
 				System.out.println(current);
 				if (current.contains("CONTINUE?")) {
 					game.requestContinueDecision();
-				} else {
+				} else if(current.contains("SELECT DIFFERENT ONE")){
+					main.showError("Your character can't go there!", "Your chatacter is unable to go the amount of steps you rolled! Please select a different one!");
+					game.requestCharacterDecision();
+				}else {
 					game.requestCharacterDecision();
 				}
 			});
 			new Thread(t).start();
-		} else if (inputUpper.startsWith("POST 24")) {
-			String[] fields = inputUpper.substring(8).split("; ");
-			for (String field : fields) {
-				if (!field.contains("NULL")) {
-					int fieldId;
-					int charId;
-					int owner;
-					try {
-						fieldId = Integer.parseInt(field.substring(0, 1));
-						charId = Integer.parseInt(field.substring(3, 4));
-						owner = Integer.parseInt(field.substring(6, 7));
-					} catch (NumberFormatException e) {
-						main.showError("Error!", "Got invalid character information from server.");
-						break;
-					}
-					for (GameCharacter c : main.getGameScreen().getCharacters()) {
-						if (c.getCharId() == charId && c.getPlayerNumber() == owner) {
-							c.setStanding(fieldId);
-							break;
-						}
-					}
-				}
-			}
 		} else {
+			if(!inputUpper.startsWith("POST 24"))
 			main.showError("Error", "Unrecognized input received from server " + input);
 		}
 
