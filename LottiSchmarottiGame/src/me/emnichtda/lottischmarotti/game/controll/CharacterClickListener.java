@@ -18,7 +18,6 @@ public class CharacterClickListener implements EventHandler<Event>{
 
 	@Override
 	public void handle(Event e){
-		System.out.println(game.getPlayerNumber() + " ownerNumber: " + ownerNumber + " char id: " + charId);
 		if(ownerNumber == game.getPlayerNumber())
 		game.selectedCharacter(charId);
 	}

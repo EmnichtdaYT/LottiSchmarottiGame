@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import javafx.concurrent.Task;
 import me.emnichtda.lottischmarotti.game.main.Main;
-import me.emnichtda.lottischmarotti.game.view.GameCharacter;
 
 public class GameParser {
 
@@ -22,7 +21,6 @@ public class GameParser {
 		String inputUpper = input.toUpperCase();
 
 		if (inputUpper.startsWith("POST 0")) {
-			System.out.println("ack " + inputUpper);
 			return;
 		}
 
@@ -56,12 +54,13 @@ public class GameParser {
 		} else if (inputUpper.startsWith("GET 2")) {
 			Task<String> t = new DiceDecisionHandler(inputUpper);
 			t.messageProperty().addListener((idfk, np, current) -> {
-				System.out.println(current);
 				if (current.contains("CONTINUE?")) {
 					game.requestContinueDecision();
 				} else if(current.contains("SELECT DIFFERENT ONE")){
 					main.showError("Your character can't go there!", "Your chatacter is unable to go the amount of steps you rolled! Please select a different one!");
 					game.requestCharacterDecision();
+				}else if(current.contains("ALL YOUR CHARACTERS")){
+					game.setCharacterDescision(false); 
 				}else {
 					game.requestCharacterDecision();
 				}
@@ -90,6 +89,7 @@ public class GameParser {
 				} catch (InterruptedException e) {
 				}
 				try {
+					System.out.println("Sending POST 23 waiting");
 					game.getOut().writeUTF("POST 23 waiting");
 				} catch (IOException e) {
 					main.showError("Error", "Unable to send timeout request " + e.getLocalizedMessage());
@@ -97,8 +97,10 @@ public class GameParser {
 			}
 			if (inputUpper.contains("CONTINUE")) {
 				if (game.getDiceDecision() == 1) {
+					System.out.println("SENDING POST 2 c");
 					game.getOut().writeUTF("POST 2 c");
 				} else if (game.getDiceDecision() == 0) {
+					System.out.println("SENDING POST 2 n");
 					game.getOut().writeUTF("POST 2 n");
 				}
 			} else {

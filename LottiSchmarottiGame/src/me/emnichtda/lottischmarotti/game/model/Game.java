@@ -34,6 +34,12 @@ public class Game implements Showable {
 	
 	private ArrayList<GameField> fields = new ArrayList<>();
 
+	private boolean characterDescision;
+	
+	public void setCharacterDescision(boolean charDesc) {
+		characterDescision = charDesc;
+	}
+	
 	public Game(Main main, GameListScreen gameListScreen, String ip, int port, String name, int playersConnected) {
 		this.ip = ip;
 		this.port = port;
@@ -208,9 +214,11 @@ public class Game implements Showable {
 	}
 
 	public void requestCharacterDecision() {
+		characterDescision = true;
 		main.getGameScreen().hideRollButton();
 		main.getGameScreen().hideContinueButton();
 		diceDecision = -1;
+		
 	}
 
 	public int getPlayerNumber() {
@@ -222,11 +230,14 @@ public class Game implements Showable {
 	}
 
 	public void selectedCharacter(int charId) {
+		if(!characterDescision) return;
 		try {
+			System.out.println("SENDING POST 2" + charId);
 			out.writeUTF("POST 2 " + charId);
 		} catch (IOException e) {
 			main.showError("Error", e.getLocalizedMessage());
 		}
+		characterDescision = false;
 	}
 
 }

@@ -36,7 +36,7 @@ public class GameScreen extends Pane implements Showable {
 			spielfeld = new ImageView(new Image(new FileInputStream("board.png")));
 		} catch (FileNotFoundException e) {
 		} // This exception shouldn't happen. I already did a if the title image is
-			// missing
+			// missing and if it does I dont fucking care
 		getChildren().add(spielfeld);
 
 		lv_players.setLayoutX(850);

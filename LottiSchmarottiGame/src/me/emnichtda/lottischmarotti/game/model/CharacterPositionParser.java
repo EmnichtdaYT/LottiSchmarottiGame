@@ -29,7 +29,6 @@ public class CharacterPositionParser {
 						fieldId = Integer.parseInt(splitted[0]);
 						charId = Integer.parseInt(splitted[1].substring(1, 2));
 						splitted = field.split(",");
-						System.out.println(splitted[1].substring(1, 2));
 						owner = Integer.parseInt(splitted[1].substring(1, 2));
 					} catch (NumberFormatException e) {
 						main.showError("Error!", "Got invalid character information from server.");
