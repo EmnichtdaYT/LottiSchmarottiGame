@@ -17,7 +17,7 @@ public class ConnectHandler implements EventHandler<ActionEvent> {
 	@Override
 	public void handle(ActionEvent arg0) {
 		Optional<String> ipPortO = main.showIpBox();
-		if(ipPortO.isEmpty()) {
+		if(!ipPortO.isPresent()) {
 			main.showError("Invalid input", "Please enter ip and port (IP:PORT)");
 			return;
 		}
@@ -41,7 +41,7 @@ public class ConnectHandler implements EventHandler<ActionEvent> {
 		
 		Optional<String> nameO = main.showNameBox();
 		
-		if(nameO.isEmpty() || nameO.get().isBlank()) {
+		if(!nameO.isPresent() || nameO.get().isEmpty()) {
 			main.showError("Invalid input", "Please enter your name");
 			return;
 		}
